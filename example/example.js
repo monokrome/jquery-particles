@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	particle_element = document.createElement('div');
-	$(particle_element).addClass('snowflake');
+	$(particle_element).addClass('snowflake').hide();
 
 	$('body').particles({
 		'parent': 'div#header',
@@ -17,6 +17,8 @@ $(document).ready(function(){
 		{
 			'top': function()
 			{
+				$(this).fadeIn(10000);
+
 				return Math.random()*($(this).parent().height());
 			},
 			'left': function()
