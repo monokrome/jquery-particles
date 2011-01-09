@@ -1,8 +1,7 @@
-(function(){
+(function($){
 
 // TODO:
-//       1. Modify this library to use time-based animation, and probably jQuery.animate for
-//       particle animation if this is a possibility.
+//       1. Modify this library to use time-based animation.
 //
 //       2. Enhance this library by allowing it to use jQuery Physics where possible.
 //          <http://plugins.jquery.com/project/jphysics>
@@ -10,16 +9,14 @@
 //       3. Resizing needs to be taken into account. When a document is resized, particles
 //          should have the option to interpolate their attributes properly.
 //
-//       4. Allow this tool to draw particles in <canvas> elements instead of on a per-element
-//          basis, but without removing the ability to use elements also.
-//
-//       5. Optimize the library to work faster without dropping functionality, and make an
+//       4. Optimize the library to work faster without dropping functionality, and make an
 //          "API" for jQuery.particle to return and let developers change different options
 //          after the particle set has been created.
 //
 
 var me = window.me || {};
-	me.monokro = me.monokro || {}
+	me.monokro = me.monokro || {},
+
 	me.monokro.particles = {
 		'generic_incrementors': {
 				// TODO: This only works with top/left combinations. Add support for bottom/right.
@@ -34,12 +31,12 @@ var me = window.me || {};
 
 					if ($(this).position().top > max_y)
 					{
-						$(this).css('top', $(this).height() * -1);
+						this.style['top'] = $(this).outerHeight() * -1;
 					}
 
 					if ($(this).position().top < ($(this).height() * -1))
 					{
-						$(this).css('top', $(this).parent().height());
+						this.style['top'] = $(this).parent().outerHeight();
 					}
 				}
 
@@ -49,12 +46,12 @@ var me = window.me || {};
 
 					if ($(this).position().left > max_x)
 					{
-						$(this).css('left', $(this).width() * -1);
+						this.style['left'] = $(this).outerWidth() * -1;
 					}
 
-					if ($(this).position().left < ($(this).width() * -1))
+					if ($(this).position().left < ($(this).outerWidth() * -1))
 					{
-						$(this).css('left', window.width);
+						this.style['left'] = $(window).width();
 					}
 				}
 			}
@@ -115,7 +112,7 @@ var me = window.me || {};
 
 				for (attr in options['init_particle'])
 				{
-					$(this_particle).css(attr, particles.option.apply(this_particle, [options['init_particle'][attr]]));
+					this_particle.style[attr] = particles.option.apply(this_particle, [options['init_particle'][attr]]);
 				}
 			});
 
@@ -149,7 +146,7 @@ var me = window.me || {};
 
 							for (attr in particle_set.update_particle)
 							{
-								$(element).css(attr, parseInt($(element).css(attr)) + particles.option.apply(element, [particle_set.update_particle[attr]]));
+								element.style[attr] = parseInt(element.style[attr]) + particles.option.apply(element, [particle_set.update_particle[attr]]);
 							}
 
 							if (typeof(particle_set.incrementor) == 'function')
@@ -187,5 +184,6 @@ var me = window.me || {};
 
 	window.me = me;
 	var particles = me.monokro.particles;
-})();
+
+}(jQuery));
 
