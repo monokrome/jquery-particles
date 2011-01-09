@@ -25,7 +25,7 @@ $(document).ready(function(){
 			{
 				return Math.random()*($(this).parent().width());
 			},
-			'background': function()
+			'backgroundImage': function()
 			{
 				return function() { return 'url(./images/snowflake_0' + String(parseInt(Math.random()*2)+1) + '.png)'; }
 			}
